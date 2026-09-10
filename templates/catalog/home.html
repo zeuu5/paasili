@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Paasili Instruments - Brass and percussion{% endblock %}
+{% block content %}
+<section class="hero">
+  <img class="hero-banner" src="/media/home/banner.jpg" alt="Musician playing a trumpet beside the sea">
+  <div class="shell hero-grid">
+    <div class="hero-copy">
+      <h1 class="hero-message">Sound in its<br>purest form.</h1>
+    </div>
+  </div>
+</section>
+<section class="trust-bar" aria-label="Paasili commitments">
+  <div class="shell"><span>Made for performance</span><span>Consistent response</span><span>Built to last</span><span>Dealer network</span></div>
+</section>
+<section class="philosophy" id="philosophy">
+  <div class="shell philosophy-grid">
+    <p class="kicker">02 / The Paasili way</p>
+    <div><h2>Serious sound<br>starts with <em>care.</em></h2><div class="philosophy-copy"><p>We believe an instrument should give every musician the confidence to play freely. That means dependable materials, considered details, and a consistent feel from the first note to the encore.</p><a class="arrow-link" href="{% url 'catalog:dealer_registration' %}">Work with us <span aria-hidden="true">&#8599;</span></a></div></div>
+  </div>
+</section>
+<section class="dealer-callout">
+  <div class="shell dealer-callout-inner">
+    <div><p class="kicker">03 / Distribution</p><h2>Bring better sound<br>to your <em>city.</em></h2></div>
+    <div><p>Join a growing network of music retailers who care about putting capable instruments in the hands of more players.</p><a class="button" href="{% url 'catalog:dealer_registration' %}">Become a dealer <span aria-hidden="true">&#8594;</span></a></div>
+  </div>
+</section>
+{% endblock %}

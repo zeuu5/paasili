@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Become a Paasili Dealer{% endblock %}
+{% block content %}
+<section class="dealer-page shell">
+  <div class="dealer-copy"><p class="kicker">Dealer network</p><h1>Put better<br>sound <em>in reach.</em></h1><p>We are looking for thoughtful retail partners to help more musicians discover Paasili.</p><div class="dealer-points"><p><b>01</b><span>Tell us a little about your business.</span></p><p><b>02</b><span>Our team will be in touch shortly.</span></p></div></div>
+  <div class="form-panel"><p class="kicker">Start a conversation</p><h2>Become a dealer</h2><form method="post" class="dealer-form">{% csrf_token %}{{ form.non_field_errors }}{% for field in form %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}<button class="button" type="submit">Send enquiry <span aria-hidden="true">&#8594;</span></button></form></div>
+</section>
+{% endblock %}

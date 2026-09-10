@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171917">
+  <title>{% block title %}Paasili Instruments{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="{% url 'catalog:home' %}" aria-label="Paasili home">
+        paasili
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+        <span></span><span></span><span class="sr-only">Open menu</span>
+      </button>
+      <nav id="primary-nav" aria-label="Primary navigation">
+        <a href="{% url 'catalog:home' %}">Home</a>
+        <a href="{% url 'catalog:product_list' %}">Instruments</a>
+        <a href="{% url 'catalog:dealer_finder' %}">Find a dealer</a>
+        <a href="{% url 'catalog:home' %}#philosophy">Our philosophy</a>
+        <a class="nav-cta" href="{% url 'catalog:dealer_registration' %}">Become a dealer <span aria-hidden="true">&#8599;</span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    {% if messages %}
+      <div class="shell messages">
+        {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="shell footer-grid">
+      <a class="brand" href="{% url 'catalog:home' %}">paasili</a>
+      <div class="footer-contact"><p>{% if site_contact %}{{ site_contact.address|linebreaksbr }}{% else %}Add your company address in Admin{% endif %}</p>{% if site_contact %}<a href="mailto:{{ site_contact.email }}">{{ site_contact.email }}</a>{% endif %}</div>
+      <div class="footer-links"><a href="{% url 'catalog:product_list' %}">View catalogue</a><a href="{% url 'catalog:dealer_finder' %}">Find a dealer</a><a href="{% url 'catalog:dealer_registration' %}">Dealer enquiries</a>{% if site_contact %}<a href="{{ site_contact.facebook_url }}" target="_blank" rel="noreferrer">Facebook</a><a href="{{ site_contact.instagram_url }}" target="_blank" rel="noreferrer">Instagram</a>{% endif %}</div>
+      <small>&copy; {% now "Y" %} Paasili Instruments</small>
+    </div>
+  </footer>
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', function () {
+      var nav = document.querySelector('#primary-nav');
+      var expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      nav.classList.toggle('is-open');
+    });
+    var dealerSearch = document.querySelector('#dealer-search');
+    if (dealerSearch) {
+      dealerSearch.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var city = document.querySelector('#dealer-city').value.trim().toLowerCase();
+        var results = document.querySelectorAll('.dealer-result');
+        var visible = 0;
+        results.forEach(function (result) {
+          var matches = !city || result.dataset.city.indexOf(city) !== -1;
+          result.hidden = !matches;
+          if (matches) visible += 1;
+        });
+        document.querySelector('#dealer-no-results').hidden = visible > 0;
+      });
+    }
+  </script>
+</body>
+</html>

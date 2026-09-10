@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Instruments - Paasili{% endblock %}
+{% block content %}
+<section class="catalog-hero"><div class="shell"><p class="kicker">The Paasili catalogue</p><h1>Find your<br><em>voice.</em></h1><p>Brass and percussion instruments made for musicians at every stage of their journey.</p></div></section>
+<section class="catalogue shell">
+  <div class="catalog-controls">
+    <form class="search" method="get" role="search"><label class="sr-only" for="product-search">Search instruments</label><input id="product-search" name="q" value="{{ query }}" placeholder="Search by instrument or model"><button type="submit" aria-label="Search">&#8981;</button></form>
+    <div class="filters" aria-label="Filter instruments"><a href="{% url 'catalog:product_list' %}" class="{% if not active_family %}active{% endif %}">All</a>{% for value, label in families %}<a href="?family={{ value }}{% if query %}&amp;q={{ query|urlencode }}{% endif %}" class="{% if active_family == value %}active{% endif %}">{{ label }}</a>{% endfor %}</div>
+  </div>
+  <div class="product-grid">
+    {% for product in products %}
+      <a class="product-card{% if product.family == 'trombone' or product.family == 'saxophone' %} coming-soon-card{% endif %}" href="{% url 'catalog:product_detail' product.slug %}">
+        <div class="product-image">{% if product.family == 'trombone' or product.family == 'saxophone' %}<span class="coming-soon">Coming soon</span>{% elif product.main_image %}<img src="{{ product.main_image.url }}" alt="{{ product.name }}">{% else %}<span>PAASILI</span>{% endif %}<span class="card-arrow" aria-hidden="true">&#8599;</span></div>
+        <p class="product-family">{{ product.get_family_display }}</p><h3>{{ product.name }}</h3><p class="price">MRP <strong>&#8377;{{ product.mrp }}</strong></p>
+      </a>
+    {% empty %}<div class="empty-state"><p class="kicker">No matches</p><h2>Nothing found.</h2><p>Try a different search or browse the entire collection.</p><a class="button" href="{% url 'catalog:product_list' %}">View all instruments <span aria-hidden="true">&#8594;</span></a></div>{% endfor %}
+  </div>
+</section>
+{% endblock %}

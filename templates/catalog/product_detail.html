@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} - Paasili{% endblock %}
+{% block content %}
+<div class="breadcrumbs shell"><a href="{% url 'catalog:product_list' %}">Instruments</a><span>/</span><span>{{ product.get_family_display }}</span></div>
+<section class="product-detail shell">
+  <div class="detail-image">{% if product.family == 'trombone' or product.family == 'saxophone' %}<span class="coming-soon">Coming soon</span>{% elif product.main_image %}<img src="{{ product.main_image.url }}" alt="{{ product.name }}">{% else %}<span>PAASILI</span>{% endif %}</div>
+  <div class="detail-copy"><p class="kicker">{{ product.get_family_display }}</p><h1>{{ product.name }}</h1>{% if product.family == 'trombone' or product.family == 'saxophone' %}<p class="description">This instrument is coming soon. Please contact us for availability updates.</p>{% elif product.model_number %}<p class="model-number">Model no. {{ product.model_number }}</p>{% endif %}{% if product.family != 'trombone' and product.family != 'saxophone' %}<p class="price detail-price">MRP <strong>&#8377;{{ product.mrp }}</strong></p>{% if product.description %}<div class="description">{{ product.description|linebreaksbr }}</div>{% else %}<p class="description">Built with the dependable response and expressive character players expect from Paasili.</p>{% endif %}{% endif %}<div class="detail-links"><a class="button" href="{% url 'catalog:dealer_registration' %}">Make an enquiry <span aria-hidden="true">&#8594;</span></a><a class="arrow-link" href="{% url 'catalog:product_list' %}">Back to catalogue <span aria-hidden="true">&#8592;</span></a></div></div>
+</section>
+{% endblock %}

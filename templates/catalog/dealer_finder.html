@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Find a Dealer - Paasili{% endblock %}
+{% block content %}
+<section class="catalog-hero"><div class="shell"><p class="kicker">Paasili dealer network</p><h1>Find Paasili<br>near <em>you.</em></h1><p>Search our authorized dealer network by city. These sample listings can be replaced with your official dealer details.</p></div></section>
+<section class="dealer-finder" id="find-dealer">
+  <div class="shell">
+    <form class="dealer-search" id="dealer-search"><label for="dealer-city">Your city</label><div><input id="dealer-city" type="search" placeholder="Enter city name" autocomplete="address-level2"><button class="button" type="submit">Find dealers <span aria-hidden="true">&#8594;</span></button></div></form>
+    <div class="dealer-results" id="dealer-results" aria-live="polite">
+      {% for dealer in dealers %}
+        <article class="dealer-result" data-city="{{ dealer.city|lower }}"><p class="kicker">{{ dealer.city }}</p><h3>{{ dealer.business_name }}</h3><p>{{ dealer.address|linebreaksbr }}{% if dealer.phone %}<br>{{ dealer.phone }}{% endif %}</p></article>
+      {% empty %}
+        <p class="dealer-no-results">Authorized dealers will appear here soon. Please contact us for assistance.</p>
+      {% endfor %}
+    </div>
+    <p class="dealer-no-results" id="dealer-no-results" hidden>No authorized dealers found for that city. Please contact us for assistance.</p>
+  </div>
+</section>
+{% endblock %}

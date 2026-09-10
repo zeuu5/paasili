@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | Paasili Instruments{% endblock %}
+
+{% block branding %}
+  <a href="{% url 'admin:index' %}" class="paasili-admin-brand">
+    <span class="paasili-admin-seal">P</span>
+    <span>PAASILI <small>INSTRUMENTS</small></span>
+  </a>
+{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    :root { --primary: #17201f; --secondary: #b87945; --accent: #b87945; }
+    #header { background: #17201f; }
+    #branding h1, #branding h1 a:link, #branding h1 a:visited { color: #fbfaf5; }
+    .paasili-admin-brand { display: inline-flex; align-items: center; gap: 10px; color: #fbfaf5; font-size: 16px; font-weight: 700; letter-spacing: .16em; text-decoration: none; }
+    .paasili-admin-brand small { display: block; margin-top: 3px; color: #d59b68; font-size: 8px; letter-spacing: .2em; }
+    .paasili-admin-seal { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid #d59b68; font-family: Georgia, serif; font-size: 18px; font-weight: 400; letter-spacing: 0; }
+    div.breadcrumbs { background: #e3ddd1; color: #17201f; }
+    div.breadcrumbs a { color: #7e512e; }
+    .module h2, .module caption { background: #17201f; }
+    .button, input[type=submit], input[type=button], .submit-row input, a.button { background: #b87945; }
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover { background: #985e34; }
+    .object-tools a:link, .object-tools a:visited { background: #b87945; }
+  </style>
+{% endblock %}
