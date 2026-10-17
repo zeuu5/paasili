@@ -47,6 +47,25 @@
     </div>
   </footer>
   <script>
+    document.documentElement.classList.add('js');
+    var revealItems = document.querySelectorAll('.trust-bar, .catalog-hero > .shell, .philosophy-grid, .dealer-callout-inner, .dealer-finder > .shell, .catalogue, .product-detail > *, .dealer-page > *, .site-footer');
+    revealItems.forEach(function (item, index) {
+      item.classList.add('reveal', 'reveal-delay-' + Math.min(index % 4, 3));
+    });
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(function (item) { revealObserver.observe(item); });
+    } else {
+      revealItems.forEach(function (item) { item.classList.add('is-visible'); });
+    }
+
     document.querySelector('.menu-toggle').addEventListener('click', function () {
       var nav = document.querySelector('#primary-nav');
       var expanded = this.getAttribute('aria-expanded') === 'true';
